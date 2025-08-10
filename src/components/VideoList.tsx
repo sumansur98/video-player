@@ -48,7 +48,9 @@ const VideoList = () => {
               key={video.id}
               className="flex items-center gap-4 border p-2 rounded-lg"
             >
-              <video src={video.url} className="w-24 h-16 object-cover" />
+              <Link href={`/video/${video.id}`}>
+                <video src={video.url} className="w-24 h-16 object-cover" />
+              </Link>
               {editId === video.id ? (
                 <div className="flex gap-2">
                   <input
