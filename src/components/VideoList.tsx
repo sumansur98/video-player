@@ -10,31 +10,32 @@ const VideoList = () => {
   const { videos, updateVideoName } = useVideoContext();
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const [editId, setEditId] = useState<string | null>(null);
-  const [tempName, setTempName] = useState("");
+  const [inputName, setInputName] = useState("");
 
   const editRef = useRef<HTMLDivElement | null>(null);
 
+  //to cancel editing
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    function handleCancelEdit(event: MouseEvent) {
       if (editRef.current && !editRef.current.contains(event.target as Node)) {
-        setEditId(null); // cancel editing
+        setEditId(null);
       }
     }
     if (editId) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("mousedown", handleCancelEdit);
     }
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleCancelEdit);
     };
   }, [editId]);
 
   const startEditing = (id: string, currentName: string) => {
     setEditId(id);
-    setTempName(currentName);
+    setInputName(currentName);
   };
 
   const saveName = (id: string) => {
-    updateVideoName({ id, newName: tempName });
+    updateVideoName({ id, newName: inputName });
     setEditId(null);
   };
 
