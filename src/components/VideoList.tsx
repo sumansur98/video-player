@@ -1,9 +1,10 @@
 "use client";
 
-import { useVideoContext } from "@/lib/VideoContext";
+import { useVideoContext } from "@/components/VideoContext";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { LayoutGrid, List } from "lucide-react";
 
 const VideoList = () => {
   const { videos, updateVideoName } = useVideoContext();
@@ -24,87 +25,127 @@ const VideoList = () => {
   return (
     <div className="mt-6">
       {/* Toggle View */}
-      <div className="mb-4">
+      <div className="mb-6 flex items-center gap-2">
         <Button
           variant={viewMode === "list" ? "default" : "outline"}
+          className={
+            viewMode === "list"
+              ? "bg-primary text-primary-foreground"
+              : "bg-card text-muted-foreground hover:text-foreground"
+          }
           onClick={() => setViewMode("list")}
-          className="mr-2"
         >
-          List
+          <List className="w-4 h-4" />
         </Button>
+
         <Button
           variant={viewMode === "grid" ? "default" : "outline"}
+          className={
+            viewMode === "grid"
+              ? "bg-primary text-primary-foreground"
+              : "bg-card text-muted-foreground hover:text-foreground"
+          }
           onClick={() => setViewMode("grid")}
         >
-          Grid
+          <LayoutGrid className="w-4 h-4" />
         </Button>
       </div>
 
       {/* Render Videos */}
       {viewMode === "list" ? (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {videos.map((video) => (
             <div
               key={video.id}
-              className="flex items-center gap-4 border p-2 rounded-lg"
+              className="flex items-center gap-4 
+        bg-card border border-border 
+        rounded-xl p-3 
+        shadow-sm hover:shadow-md 
+        transition-shadow"
             >
               <Link href={`/video/${video.id}`}>
-                <video src={video.url} className="w-24 h-16 object-cover" />
+                <video
+                  src={video.url}
+                  className="w-28 h-20 object-cover rounded-md hover:scale-[1.01]"
+                />
               </Link>
               {editId === video.id ? (
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2 w-full">
                   <input
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
-                    className="border rounded px-2 py-1"
+                    className="flex-1 border rounded px-2 py-1"
                   />
-                  <Button size="sm" onClick={() => saveName(video.id)}>
+                  <Button
+                    size="sm"
+                    onClick={() => saveName(video.id)}
+                    className="text-xs"
+                  >
                     Save
                   </Button>
                 </div>
               ) : (
-                <>
-                  <p>{video.name}</p>
+                <div className="flex-1 flex items-center justify-between">
+                  <p className="truncate text-sm text-foreground">
+                    {video.name}
+                  </p>
                   <Button
                     size="sm"
                     variant="outline"
+                    className="text-xs"
                     onClick={() => startEditing(video.id, video.name)}
                   >
                     Edit
                   </Button>
-                </>
+                </div>
               )}
             </div>
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {videos.map((video) => (
-            <div key={video.id} className="border p-2 rounded-lg">
+            <div
+              key={video.id}
+              className="bg-card 
+        border border-border 
+        rounded-xl 
+        overflow-hidden 
+        shadow-sm 
+        hover:shadow-md 
+        transition-shadow"
+            >
               <Link href={`/video/${video.id}`}>
                 <video
                   src={video.url}
-                  className="w-full h-32 object-cover rounded"
+                  className="w-full h-36 object-cover hover:scale-[1.01]"
                 />
               </Link>
               {editId === video.id ? (
-                <div className="flex gap-2 mt-2">
+                <div className="flex justify-between items-center p-3 gap-2">
                   <input
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
                     className="border rounded px-2 py-1 w-full"
                   />
-                  <Button size="sm" onClick={() => saveName(video.id)}>
+                  <Button
+                    size="sm"
+                    onClick={() => saveName(video.id)}
+                    className="text-xs"
+                  >
                     Save
                   </Button>
                 </div>
               ) : (
-                <div className="flex justify-between items-center mt-2">
-                  <p className="truncate">{video.name}</p>
+                <div className="flex justify-between items-center p-3">
+                  <p className="truncate text-sm text-foreground">
+                    {video.name}
+                  </p>
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => startEditing(video.id, video.name)}
+                    className="text-xs"
                   >
                     Edit
                   </Button>
