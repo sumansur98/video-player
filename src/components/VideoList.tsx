@@ -1,7 +1,7 @@
 "use client";
 
 import { useVideoContext } from "@/components/VideoContext";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LayoutGrid, List } from "lucide-react";
@@ -11,6 +11,22 @@ const VideoList = () => {
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const [editId, setEditId] = useState<string | null>(null);
   const [tempName, setTempName] = useState("");
+
+  const editRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (editRef.current && !editRef.current.contains(event.target as Node)) {
+        setEditId(null); // cancel editing
+      }
+    }
+    if (editId) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [editId]);
 
   const startEditing = (id: string, currentName: string) => {
     setEditId(id);
@@ -70,7 +86,7 @@ const VideoList = () => {
                 />
               </Link>
               {editId === video.id ? (
-                <div className="flex items-center gap-2 w-full">
+                <div ref={editRef} className="flex items-center gap-2 w-full">
                   <input
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}
@@ -122,7 +138,10 @@ const VideoList = () => {
                 />
               </Link>
               {editId === video.id ? (
-                <div className="flex justify-between items-center p-3 gap-2">
+                <div
+                  ref={editRef}
+                  className="flex justify-between items-center p-3 gap-2"
+                >
                   <input
                     value={tempName}
                     onChange={(e) => setTempName(e.target.value)}

@@ -1,13 +1,18 @@
 "use client";
 
 import { useVideoContext } from "@/components/VideoContext";
-import React from "react";
-import { useDropzone } from "react-dropzone";
+import React, { useEffect } from "react";
+import { FileRejection, useDropzone } from "react-dropzone";
 
 const VideoUpload = () => {
   const { addVideo } = useVideoContext();
 
-  const onDrop = (acceptedFiles: File[]) => {
+  const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+    if (fileRejections.length > 0) {
+      alert("Only video files are accepted.");
+      return;
+    }
+
     acceptedFiles.forEach((file) => {
       if (file.type.startsWith("video/")) {
         addVideo(file);
@@ -17,11 +22,12 @@ const VideoUpload = () => {
     });
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: { "video/*": [] },
-    multiple: true,
-  });
+  const { getRootProps, getInputProps, isDragActive } =
+    useDropzone({
+      onDrop,
+      accept: { "video/*": [".mp4", ".mov", ".avi", ".mkv", ".webm"] },
+      multiple: true,
+    });
 
   return (
     <div
@@ -37,6 +43,7 @@ const VideoUpload = () => {
     hover:border-primary hover:bg-accent/10
     transition-colors
     cursor-pointer
+    min-h-[150px]
   "
     >
       <input {...getInputProps()} />
@@ -51,18 +58,6 @@ const VideoUpload = () => {
         </div>
       )}
     </div>
-
-    // <div
-    //   {...getRootProps()}
-    //   className="border-2 border-dashed border-gray-400 p-6 text-center rounded-lg cursor-pointer"
-    // >
-    //   <input {...getInputProps()} />
-    //   {isDragActive ? (
-    //     <p>Drop the videos here...</p>
-    //   ) : (
-    //     <p>Drag & drop videos here, or click to select</p>
-    //   )}
-    // </div>
   );
 };
 
