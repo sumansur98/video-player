@@ -93,7 +93,7 @@ const VideoList = () => {
               <Link href={`/video/${video.id}`}>
                 <video
                   src={video.url}
-                  className="w-28 h-20 object-cover rounded-md hover:scale-[1.01]"
+                  className="w-24 sm:w-28 h-20 object-cover rounded-md hover:scale-[1.01]"
                 />
               </Link>
               {editId === video.id ? (
@@ -130,7 +130,7 @@ const VideoList = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {videos.map((video) => (
             <div
               key={video.id}
