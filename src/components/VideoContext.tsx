@@ -35,10 +35,23 @@ export const VideoProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addVideo = async (file: File) => {
     const id = uuid();
-    await addVideoToDb({ id: id, name: file.name, file: file });
+    await addVideoToDb({
+      id: id,
+      name: file.name,
+      file: file,
+      size: file.size,
+      uploadedAt: new Date().toISOString(),
+    });
     setVideos((prev) => [
       ...prev,
-      { id, name: file.name, url: URL.createObjectURL(file), file },
+      {
+        id,
+        name: file.name,
+        url: URL.createObjectURL(file),
+        file,
+        size: file.size,
+        uploadedAt: new Date().toISOString(),
+      },
     ]);
   };
 

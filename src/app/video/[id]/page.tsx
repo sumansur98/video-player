@@ -53,6 +53,32 @@ const Page = () => {
 
       {/* Video Title */}
       <h1 className="text-2xl font-semibold text-foreground">{video.name}</h1>
+
+      <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
+        {/* File Extension */}
+        <div>
+          <span className="font-medium text-foreground">Type: </span>
+          {video.name.split(".").pop()?.toUpperCase() || "N/A"}
+        </div>
+
+        {/* File Size */}
+        <div>
+          <span className="font-medium text-foreground">Size: </span>
+          {(video.size / (1024 * 1024)).toFixed(2)} MB
+        </div>
+
+        {/* Uploaded On */}
+        <div>
+          <span className="font-medium text-foreground">Uploaded: </span>
+          {new Date(video.uploadedAt).toLocaleString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </div>
+      </div>
     </div>
   );
 }

@@ -38,6 +38,16 @@ const VideoList = () => {
     setEditId(null);
   };
 
+  if(videos.length === 0){
+    return (
+      <div className="flex flex-col items-center justify-center text-center py-20">
+        <h2 className="text-lg font-semibold text-foreground">
+          No videos uploaded yet
+        </h2>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-6">
       {/* Toggle View */}

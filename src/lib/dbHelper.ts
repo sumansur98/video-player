@@ -21,7 +21,7 @@ const getDB = async () => {
   });
 };
 
-const addVideoToDb = async (video : {id : string, name : string , file : File}) => {
+const addVideoToDb = async (video : {id : string, name : string , file : File, size : number, uploadedAt : string}) => {
     const db = await getDB();
 
     await db.put('videos', video);
