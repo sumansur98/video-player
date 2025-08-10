@@ -14,6 +14,7 @@ const VideoList = () => {
   const [inputName, setInputName] = useState("");
 
   const editRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   //to cancel editing
   useEffect(() => {
@@ -28,6 +29,12 @@ const VideoList = () => {
     return () => {
       document.removeEventListener("mousedown", handleCancelEdit);
     };
+  }, [editId]);
+
+  useEffect(() => {
+    if (editId && inputRef.current) {
+      inputRef.current.focus();
+    }
   }, [editId]);
 
   const startEditing = (id: string, currentName: string) => {
@@ -101,9 +108,15 @@ const VideoList = () => {
               {editId === video.id ? (
                 <div ref={editRef} className="flex items-center gap-2 w-full">
                   <input
+                    ref={inputRef}
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
                     className="flex-1 border rounded px-2 py-1"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        saveName(video.id);
+                      }
+                    }}
                   />
                   <Button
                     size="sm"
@@ -156,9 +169,15 @@ const VideoList = () => {
                   className="flex justify-between items-center p-3 gap-2"
                 >
                   <input
+                    ref={inputRef}
                     value={inputName}
                     onChange={(e) => setInputName(e.target.value)}
                     className="border rounded px-2 py-1 w-full"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        saveName(video.id);
+                      }
+                    }}
                   />
                   <Button
                     size="sm"
