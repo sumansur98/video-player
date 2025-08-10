@@ -9,6 +9,8 @@ interface VideoDB extends DBSchema {
       id: string;
       name: string;
       file: File;
+      size : number;
+      uploadedAt : string;
     };
   };
 }

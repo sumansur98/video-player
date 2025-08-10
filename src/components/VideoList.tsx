@@ -99,8 +99,8 @@ const VideoList = () => {
               {editId === video.id ? (
                 <div ref={editRef} className="flex items-center gap-2 w-full">
                   <input
-                    value={tempName}
-                    onChange={(e) => setTempName(e.target.value)}
+                    value={inputName}
+                    onChange={(e) => setInputName(e.target.value)}
                     className="flex-1 border rounded px-2 py-1"
                   />
                   <Button
@@ -154,8 +154,8 @@ const VideoList = () => {
                   className="flex justify-between items-center p-3 gap-2"
                 >
                   <input
-                    value={tempName}
-                    onChange={(e) => setTempName(e.target.value)}
+                    value={inputName}
+                    onChange={(e) => setInputName(e.target.value)}
                     className="border rounded px-2 py-1 w-full"
                   />
                   <Button

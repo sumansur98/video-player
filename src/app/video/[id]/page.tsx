@@ -13,6 +13,8 @@ const Page = () => {
         id: string;
         name: string;
         file: File;
+        size : number;
+        uploadedAt : string;
       }
     | undefined
     | null
@@ -23,8 +25,10 @@ const Page = () => {
     const fetchVideo = async () => {
       const db = await getDB();
       const vid = await db.get("videos", id as string);
-      setVideo(vid);
-      setVideoUrl(URL.createObjectURL(vid?.file));
+      if (vid?.file) {
+        setVideo(vid);
+        setVideoUrl(URL.createObjectURL(vid.file));
+      }
     };
 
     fetchVideo();
