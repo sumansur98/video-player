@@ -1,3 +1,4 @@
+'use client'
 import { createContext, useContext, useEffect, useState } from "react";
 import { VideoType } from "./types"
 import { addVideoToDb, getAllVideosFromDB, updateVideoNameInDB } from "./dbHelper";
