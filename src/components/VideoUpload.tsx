@@ -3,19 +3,23 @@
 import { useVideoContext } from "@/components/VideoContext";
 import React, { useEffect } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
+import { toast } from "sonner";
 
 const VideoUpload = () => {
   const { addVideo } = useVideoContext();
+  
 
   const onDrop = (acceptedFiles: File[], fileRejections: FileRejection[]) => {
     if (fileRejections.length > 0) {
-      alert("Only video files are accepted.");
+      //alert("Only video files are accepted.");
+      toast.error("Please upload only video files...");
       return;
     }
 
     acceptedFiles.forEach((file) => {
       if (file.type.startsWith("video/")) {
         addVideo(file);
+        toast.success("File Uploaded Successfully...")
       } else {
         alert("Only video files are allowed!");
       }

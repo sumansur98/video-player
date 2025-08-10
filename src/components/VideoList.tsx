@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { LayoutGrid, List } from "lucide-react";
+import { toast } from "sonner";
 
 const VideoList = () => {
   const { videos, updateVideoName } = useVideoContext();
@@ -36,6 +37,7 @@ const VideoList = () => {
 
   const saveName = (id: string) => {
     updateVideoName({ id, newName: inputName });
+    toast.success("Details Saved");
     setEditId(null);
   };
 
