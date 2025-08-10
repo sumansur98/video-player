@@ -55,12 +55,6 @@ const Page = () => {
       <h1 className="text-2xl font-semibold text-foreground">{video.name}</h1>
 
       <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-        {/* File Extension */}
-        <div>
-          <span className="font-medium text-foreground">Type: </span>
-          {video.name.split(".").pop()?.toUpperCase() || "N/A"}
-        </div>
-
         {/* File Size */}
         <div>
           <span className="font-medium text-foreground">Size: </span>
